@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types"
 import { ethers } from "hardhat"
 
 const deployGovernanceToken: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-    const { getNamedAccounts, deployments, network } = hre
+    const { getNamedAccounts, deployments } = hre
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
 
@@ -17,6 +17,7 @@ const deployGovernanceToken: DeployFunction = async function (hre: HardhatRuntim
 
     await delegate(governanceToken.address, deployer)
     log("Delegated!")
+    log("-------------------------------------------------")
 }
 
 const delegate = async (governanceTokenAddress: string, delegatedAccount: string) => {
