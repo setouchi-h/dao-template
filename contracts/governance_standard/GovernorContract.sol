@@ -25,7 +25,7 @@ contract GovernorContract is
     )
         Governor("GovernorContract")
         GovernorSettings(
-            _votingDelay, /* 1 block */ // voting delay
+            _votingDelay /* 1 block */, // voting delay
             _votingPeriod, // 45818 blocks, /* 1 week */ // voting period
             0 // proposal threshold
         )
@@ -34,21 +34,11 @@ contract GovernorContract is
         GovernorTimelockControl(_timelock)
     {}
 
-    function votingDelay()
-        public
-        view
-        override(IGovernor, GovernorSettings)
-        returns (uint256)
-    {
+    function votingDelay() public view override(IGovernor, GovernorSettings) returns (uint256) {
         return super.votingDelay();
     }
 
-    function votingPeriod()
-        public
-        view
-        override(IGovernor, GovernorSettings)
-        returns (uint256)
-    {
+    function votingPeriod() public view override(IGovernor, GovernorSettings) returns (uint256) {
         return super.votingPeriod();
     }
 
@@ -56,12 +46,7 @@ contract GovernorContract is
 
     function quorum(
         uint256 blockNumber
-    )
-        public
-        view
-        override(IGovernor, GovernorVotesQuorumFraction)
-        returns (uint256)
-    {
+    ) public view override(IGovernor, GovernorVotesQuorumFraction) returns (uint256) {
         return super.quorum(blockNumber);
     }
 
@@ -74,12 +59,7 @@ contract GovernorContract is
 
     function state(
         uint256 proposalId
-    )
-        public
-        view
-        override(Governor, GovernorTimelockControl)
-        returns (ProposalState)
-    {
+    ) public view override(Governor, GovernorTimelockControl) returns (ProposalState) {
         return super.state(proposalId);
     }
 

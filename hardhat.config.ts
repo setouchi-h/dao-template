@@ -1,7 +1,8 @@
+import "@nomicfoundation/hardhat-chai-matchers"
+import "@nomicfoundation/hardhat-toolbox"
+import "dotenv/config"
 import "hardhat-deploy"
-import "@nomiclabs/hardhat-ethers"
-import "@typechain/hardhat"
-import { HardhatUserConfig } from "hardhat/types"
+import { HardhatUserConfig } from "hardhat/config"
 
 /** @type import('hardhat/config').HardhatUserConfig */
 // module.exports = {
