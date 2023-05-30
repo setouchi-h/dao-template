@@ -7,11 +7,13 @@ import { ADDRESS_ZERO } from "../helper-hardhat-config"
 const setupGovernanceContracts: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // @ts-ignore
     const { getNamedAccounts, deployments } = hre
-    const { log } = deployments
+    const { log, get } = deployments
     const { deployer } = await getNamedAccounts()
 
-    const timeLock = await ethers.getContract("TimeLock", deployer) // deployer call the contract
-    const governor = await ethers.getContract("GovernorContract", deployer)
+    const governorContract = await get("GovernorContract")
+    const governor = await ethers.getContractAt("GovernorContract", governorContract.address)
+    const timeLockContract = await get("TimeLock") // deployer call the contract
+    const timeLock = await ethers.getContractAt("TimeLock", timeLockContract.address)
 
     log("Setting up roles...")
     const proposerRole = await timeLock.PROPOSER_ROLE()
@@ -30,3 +32,5 @@ const setupGovernanceContracts: DeployFunction = async function (hre: HardhatRun
 }
 
 export default setupGovernanceContracts
+
+setupGovernanceContracts.tags = ["all"]

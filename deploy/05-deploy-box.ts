@@ -6,7 +6,7 @@ import { ethers } from "hardhat"
 const deployBox: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // @ts-ignore
     const { getNamedAccounts, deployments } = hre
-    const { deploy, log } = deployments
+    const { deploy, log, get } = deployments
     const { deployer } = await getNamedAccounts()
 
     log("Deploying Box...")
@@ -16,7 +16,8 @@ const deployBox: DeployFunction = async function (hre: HardhatRuntimeEnvironment
         log: true,
     })
 
-    const timeLock = await ethers.getContract("TimeLock")
+    const timeLockContract = await get("TimeLock")
+    const timeLock = await ethers.getContractAt("TimeLock", timeLockContract.address)
     const boxContract = await ethers.getContractAt("Box", box.address)
     const transferOwnerTx = await boxContract.transferOwnership(timeLock.address)
     await transferOwnerTx.wait(1)
@@ -24,3 +25,5 @@ const deployBox: DeployFunction = async function (hre: HardhatRuntimeEnvironment
 }
 
 export default deployBox
+
+deployBox.tags = ["all", "box"]
