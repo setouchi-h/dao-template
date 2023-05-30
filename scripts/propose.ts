@@ -16,6 +16,7 @@ export async function propose(args: any[], functionToCall: string, proposalDescr
     const governor = await ethers.getContractAt("GovernorContract", Governor.address)
     const Box = await deployments.get("Box")
     const box = await ethers.getContractAt("Box", Box.address)
+
     const encodedFunctionCall = box.interface.encodeFunctionData(functionToCall, args)
     console.log(`Proposing ${functionToCall} on ${box.address} with ${args}`)
     console.log(`Proposing Description: \n ${proposalDescrition}`)
@@ -23,11 +24,13 @@ export async function propose(args: any[], functionToCall: string, proposalDescr
         [box.address],
         [0],
         [encodedFunctionCall],
+        // ↓ this will be hashed on chain
         proposalDescrition
     )
     const proposeReceipt = await proposeTx.wait(1)
 
     if (developmentChains.includes(network.name)) {
+        // disable voting
         await moveBlocks(VOTING_DELAY + 1)
     }
 
