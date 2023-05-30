@@ -8,3 +8,4 @@ export const FUNC = "store"
 export const PROPOSAL_DESCRIPTION = "Proposal #1: Store 77 in the Box!"
 
 export const developmentChains = ["hardhat", "localhost"]
+export const proposalsFile = "proposals.json"
